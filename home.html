@@ -4,23 +4,106 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Accueil</title>
+	
+    <title>Biienvenue</title>
 
     <!-- Bootstrap -->
-    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
 	<link href="bootstrap.css" rel="stylesheet" type="text/css" />
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	
+	<?php
+	$bdd=new PDO('mysql:host=localhost;dbname=accueil','root','',array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+	$reponse = $bdd->query('SELECT * FROM eleves');
+	$reponsee = $bdd->query('SELECT * FROM achievements');
+	if(isset($_POST['eleve1']))
+	{
+		while($donnees = $reponsee->fetch())
+		{
+			if($donnees['id']==$_POST['achievement'])
+			{
+				$ach=$donnees['Achievement'];
+				$iddd=$donnees['id'];
+				$elv1=$_POST['eleve1'];
+				$appelfait=$bdd->query("UPDATE achievements SET Appel = '1' WHERE id = '$iddd' ;");
+				$appel1 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv1', NULL)");
+				if(isset($_POST['eleve2']))
+				{
+					$elv2=$_POST['eleve2'];
+					$appel2 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv2', NULL)");
+					if(isset($_POST['eleve3']))
+					{
+						$elv3=$_POST['eleve3'];
+						$appel3 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv3', NULL)");
+						if(isset($_POST['eleve4']))
+						{
+							$elv4=$_POST['eleve4'];
+							$appel4 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv4', NULL)");
+							if(isset($_POST['eleve5']))
+							{
+								$elv5=$_POST['eleve5'];
+								$appel5 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv5', NULL)");
+								if(isset($_POST['eleve6']))
+								{
+									$elv6=$_POST['eleve6'];
+									$appel6 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv6', NULL)");
+									if(isset($_POST['eleve7']))
+									{
+										$elv7=$_POST['eleve7'];
+										$appel7 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv7', NULL)");
+										if(isset($_POST['eleve8']))
+										{
+											$elv8=$_POST['eleve8'];
+											$appel8 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv8', NULL)");
+											if(isset($_POST['eleve9']))
+											{
+												$elv9=$_POST['eleve9'];
+												$appel9 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv9', NULL)");
+												if(isset($_POST['eleve10']))
+												{
+													$elv10=$_POST['eleve10'];
+													$appel10 = $bdd->query("INSERT INTO achievementsdonebyeleves (Achievement, Eleve, id) VALUES ('$ach', '$elv10', NULL)");
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if(isset($_POST['email']))
+	{
+		while($donneess = $reponse->fetch())
+		{
+			if($donneess['Mail']==$_POST['email'])
+			{
+				if($donneess['Password']==$_POST['pass0'])
+				{
+					if($_POST['pass1']==$_POST['pass2'])
+					{
+						$mail = $donneess['Mail'];
+						$pass = $_POST['pass1'];
+						$nvmdp = $bdd->query("UPDATE eleves SET Password = '$pass' WHERE Mail = '$mail' ");
+					}
+					else
+					{
+						echo '<p style="color:red;">vous avez mal recopié votre nouveau mot de passe</p>';
+					}
+				}
+				else
+				{
+					echo '<p style="color:red;">ce n\'est pas votre mot de passe </p>';
+				}
+			}
+		}
+	}
+	
+	?>
   </head>
-  <body>
-	<div class="container">
- 
+  <body class="modal-form">
+	<div class="container class="modal-form"">
 <br/>
 <div class="card mx-auto border-0" style="width: 70rem;">
   <img class="card-img-top mx-auto" src="logo(entier).png" alt="Card image cap" style="width: 400px">
@@ -36,29 +119,31 @@ La vie serait tellement plus simple si les élèves s’entraidaient un peu plus
 	  
   <div class="card-body">
   <p> <strong>Commencez par vous identifier </strong> </p>
-<form>
+<form action="bienvenue.php" method="post">
   <div class="form-group">
     <label for="exampleInputEmail1">Email ENSIIE</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Entrer email ENSIIE">
+    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Entrer email ENSIIE">
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Mot de passe</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Mot de passe">
+    <input type="password" class="form-control" id="pass" name="pass" placeholder="Mot de passe">
   </div>
-  <button type="submit" class="btn btn-info">Entrer</button>
+  <button type="submit" class="btn btn-info submit-button" id="login-button" name="login_button" value="Connexion">Entrer</button>
 </form>
 	</div>
 	</div>
 	<br/>
+	<p><a href="changermdp.php">Changer son mot de passe</a></p>
 	<div class="mx-auto" style="width: 200px;">
 		<small> Besoin d'aide ? Cliquez <a href="">ici</a>. 
 		</small> 
 	</div>
 </div>
 	
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="bienvenue.php"></script><script type="text/javascript" src="bienvenue.php"></script><script type="text/javascript" src="bienvenue.php"></script>  <script type="text/javascript">//<![CDATA[
+Login.user_error="Veuillez saisir une adresse mail.";Login.pass_error="Veuillez saisir un mot de passe.";Login.pre_sel="auto";
+//]]></script>
   </body>
 </html>
